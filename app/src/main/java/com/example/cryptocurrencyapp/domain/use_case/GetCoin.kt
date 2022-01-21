@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCoinUseCase @Inject constructor(
+class GetCoin @Inject constructor(
     private val repository: CoinRepository
 ) {
     // Operator fun can call the use case like a function

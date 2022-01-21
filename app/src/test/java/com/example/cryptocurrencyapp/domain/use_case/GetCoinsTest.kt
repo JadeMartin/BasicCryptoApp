@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 
 class GetCoinsTest {
-    private lateinit var getCoins: GetCoinsUseCase
+    private lateinit var getCoins: GetCoins
     private lateinit var server: ResourceHandler
 
     /// Test Data
@@ -37,7 +37,7 @@ class GetCoinsTest {
             .create(CoinPaprikaApi::class.java)
 
         server = ResourceHandler(webServer)
-        getCoins = GetCoinsUseCase(CoinRepositoryImpl(api))
+        getCoins = GetCoins(CoinRepositoryImpl(api))
     }
 
     @After
