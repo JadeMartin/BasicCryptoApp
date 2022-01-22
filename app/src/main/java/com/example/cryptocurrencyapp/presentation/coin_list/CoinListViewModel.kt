@@ -7,12 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.cryptocurrencyapp.common.Resource
 import com.example.cryptocurrencyapp.domain.use_case.GetCoins
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class CoinListViewModel @Inject constructor(
-    private val getCoins : GetCoins
+    private val getCoinsUseCase : GetCoins
 ) : ViewModel() {
 
     private val _state = mutableStateOf(CoinListState())
@@ -23,7 +24,7 @@ class CoinListViewModel @Inject constructor(
     }
 
     private fun getCoins() {
-        getCoins().onEach { result ->
+        getCoinsUseCase().onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = CoinListState(
