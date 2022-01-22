@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CryptocurrencyApp</string>
+    <string name="active">active</string>
+    <string name="inactive">inactive</string>
+    <string name="price_history_title">Price History (USD)</string>
+    <string name="tags_title">Tags</string>
+    <string name="team_title">Team members</string>
+    <string name="one_week">1W</string>
+    <string name="one_month">1M</string>
+    <string name="one_year">1Y</string>
 </resources>

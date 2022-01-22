@@ -49,7 +49,7 @@ class CoinDetailViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _coinState.value = CoinDetailState(
-                            error = result.message ?: "An unexpected error has occurred."
+                            error = result.message ?: Constants.DEFAULT_ERROR
                         )
                     }
                     is Resource.Loading -> {
@@ -72,7 +72,7 @@ class CoinDetailViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _historyState.value = PriceHistoryState(
-                            error = result.message ?: "An unexpected error has occurred.",
+                            error = result.message ?: Constants.DEFAULT_ERROR,
                             dateWindow = dateWindow
                         )
                     }

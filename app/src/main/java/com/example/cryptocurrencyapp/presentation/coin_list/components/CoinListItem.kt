@@ -8,10 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.domain.model.Coin
 
 @Composable
@@ -32,7 +34,7 @@ fun CoinListItem (
             overflow = TextOverflow.Ellipsis
         )
         Text(
-            text = if(coin.isActive) "active" else "inactive",
+            text = if(coin.isActive) stringResource(R.string.active) else stringResource(R.string.inactive),
             color = if(coin.isActive) Color.Green else Color.Red,
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.End,

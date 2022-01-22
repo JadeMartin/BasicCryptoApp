@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.presentation.coin_detail.components.CoinHistory
 import com.google.accompanist.flowlayout.FlowRow
 import com.example.cryptocurrencyapp.presentation.coin_detail.components.CoinTag
@@ -46,7 +48,8 @@ fun CoinDetailScreen(
                             modifier = Modifier.weight(8f)
                         )
                         Text(
-                            text = if (coin.isActive) "active" else "inactive",
+                            text = if(coin.isActive) stringResource(R.string.active) else stringResource(
+                                R.string.inactive),
                             color = if (coin.isActive) Color.Green else Color.Red,
                             fontStyle = FontStyle.Italic,
                             textAlign = TextAlign.End,
@@ -62,7 +65,7 @@ fun CoinDetailScreen(
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
-                        text = "Price History (USD)",
+                        text = stringResource(R.string.price_history_title),
                         style = MaterialTheme.typography.h3
                     )
                     CoinHistory(
@@ -82,7 +85,7 @@ fun CoinDetailScreen(
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
-                        text = "Tags",
+                        text = stringResource(R.string.tags_title),
                         style = MaterialTheme.typography.h3
                     )
                     Spacer(modifier = Modifier.height(15.dp))
@@ -97,7 +100,7 @@ fun CoinDetailScreen(
                     }
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
-                        text = "Team members",
+                        text = stringResource(R.string.team_title),
                         style = MaterialTheme.typography.h3
                     )
                     Spacer(modifier = Modifier.height(15.dp))

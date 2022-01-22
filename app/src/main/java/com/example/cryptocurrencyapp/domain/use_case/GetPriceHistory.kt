@@ -1,5 +1,6 @@
 package com.example.cryptocurrencyapp.domain.use_case
 
+import com.example.cryptocurrencyapp.common.Constants
 import com.example.cryptocurrencyapp.common.Resource
 import com.example.cryptocurrencyapp.data.remote.dto.toCoinPrice
 import com.example.cryptocurrencyapp.domain.model.CoinPrice
@@ -21,9 +22,9 @@ class GetPriceHistory @Inject constructor(
                 val priceHistory = repository.getPriceHistory(coinId, start).map { it.toCoinPrice() }
                 emit(Resource.Success<List<CoinPrice>>(priceHistory))
             } catch(e: HttpException) {
-                emit(Resource.Error<List<CoinPrice>>(e.localizedMessage ?: "An unexpected error occurred."))
+                emit(Resource.Error<List<CoinPrice>>(e.localizedMessage ?: Constants.DEFAULT_ERROR))
             } catch(e: IOException) {
-                emit(Resource.Error<List<CoinPrice>>("Couldn't reach server. Please check your internet connection"))
+                emit(Resource.Error<List<CoinPrice>>(Constants.DEFAULT_ERROR_INTERNET))
             }
         }
 }

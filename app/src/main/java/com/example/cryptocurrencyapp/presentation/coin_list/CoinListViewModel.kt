@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptocurrencyapp.common.Constants
 import com.example.cryptocurrencyapp.common.Resource
 import com.example.cryptocurrencyapp.domain.use_case.GetCoins
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +34,7 @@ class CoinListViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = CoinListState(
-                        error = result.message ?: "An unexpected error has occurred."
+                        error = result.message ?: Constants.DEFAULT_ERROR
                     )
                 }
                 is Resource.Loading -> {
