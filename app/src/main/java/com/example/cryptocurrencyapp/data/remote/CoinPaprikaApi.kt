@@ -20,6 +20,6 @@ interface CoinPaprikaApi {
     suspend fun getPriceHistory(
         @Path("coinId") coinId: String,
         @Query("start") start : String,
-        @Query("limit") limit : Int = Constants.MAX_HISTORY_LIMIT,
+        @Query("limit") limit : Int,
         ) : List<CoinPriceDto>
 }

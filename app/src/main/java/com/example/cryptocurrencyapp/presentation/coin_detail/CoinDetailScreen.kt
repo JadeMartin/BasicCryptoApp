@@ -18,11 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptocurrencyapp.R
-import com.example.cryptocurrencyapp.presentation.coin_detail.components.CoinHistory
+import com.example.cryptocurrencyapp.presentation.coin_detail.components.*
 import com.google.accompanist.flowlayout.FlowRow
-import com.example.cryptocurrencyapp.presentation.coin_detail.components.CoinTag
-import com.example.cryptocurrencyapp.presentation.coin_detail.components.DateWindowSection
-import com.example.cryptocurrencyapp.presentation.coin_detail.components.TeamListItem
 
 @Composable
 fun CoinDetailScreen(
@@ -74,11 +71,11 @@ fun CoinDetailScreen(
                             .fillMaxWidth()
                             .padding(10.dp),
                     )
-                    DateWindowSection(
+                    PricePeriodSelect(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 16.dp),
-                        dateWindow = historyState.dateWindow,
+                        pricePeriod = historyState.pricePeriod,
                         onDateChange = {
                             viewModel.onEvent(CoinEvent.DateChange(it))
                         }

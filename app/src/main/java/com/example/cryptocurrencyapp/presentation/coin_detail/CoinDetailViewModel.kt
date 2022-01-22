@@ -34,7 +34,7 @@ class CoinDetailViewModel @Inject constructor(
         savedStateHandle.get<String>(Constants.PARAM_COIN_ID)?.let { coinId ->
             currentCoinId = coinId
             getCoin()
-            getPriceHistory(Constants.TIME_WEEK)
+            getPriceHistory(Constants.DAYS_IN_A_WEEK)
         }
     }
 
@@ -60,26 +60,26 @@ class CoinDetailViewModel @Inject constructor(
         }
     }
 
-    private fun getPriceHistory(dateWindow: Long) {
+    private fun getPriceHistory(pricePeriod: Long) {
         currentCoinId?.let {
-            getPriceHistoryUseCase(it, getDate(dateWindow)).onEach { result ->
+            getPriceHistoryUseCase(it, pricePeriod).onEach { result ->
                 when(result) {
                     is Resource.Success -> {
                         _historyState.value = PriceHistoryState(
                             history = result.data ?: emptyList(),
-                            dateWindow = dateWindow
+                            pricePeriod = pricePeriod
                         )
                     }
                     is Resource.Error -> {
                         _historyState.value = PriceHistoryState(
                             error = result.message ?: Constants.DEFAULT_ERROR,
-                            dateWindow = dateWindow
+                            pricePeriod = pricePeriod
                         )
                     }
                     is Resource.Loading -> {
                         _historyState.value = PriceHistoryState(
                             isLoading = true,
-                            dateWindow = dateWindow
+                            pricePeriod = pricePeriod
                         )
                     }
                 }
@@ -90,7 +90,7 @@ class CoinDetailViewModel @Inject constructor(
     fun onEvent(event: CoinEvent) {
         when(event) {
             is CoinEvent.DateChange -> {
-                getPriceHistory(event.dateWindow)
+                getPriceHistory(event.pricePeriod)
             }
         }
 

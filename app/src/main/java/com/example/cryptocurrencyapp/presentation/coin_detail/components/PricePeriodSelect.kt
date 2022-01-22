@@ -10,9 +10,9 @@ import com.example.cryptocurrencyapp.R
 import com.example.cryptocurrencyapp.common.Constants
 
 @Composable
-fun DateWindowSection(
+fun PricePeriodSelect(
     modifier: Modifier = Modifier,
-    dateWindow: Long,
+    pricePeriod: Long,
     onDateChange: (Long) -> Unit
 ) {
     Spacer(modifier = Modifier.height(5.dp))
@@ -23,21 +23,21 @@ fun DateWindowSection(
     ) {
 
         DefaultRadioButton(text = stringResource(R.string.one_week),
-            selected = dateWindow == Constants.TIME_WEEK,
+            selected = pricePeriod == Constants.DAYS_IN_A_WEEK,
             onSelect = {
-                onDateChange(Constants.TIME_WEEK)
+                onDateChange(Constants.DAYS_IN_A_WEEK)
             })
         Spacer(modifier = Modifier.width(10.dp))
         DefaultRadioButton(text = stringResource(R.string.one_month),
-            selected = dateWindow == Constants.TIME_MONTH,
+            selected = pricePeriod == Constants.DAYS_IN_A_MONTH,
             onSelect = {
-                onDateChange(Constants.TIME_MONTH)
+                onDateChange(Constants.DAYS_IN_A_MONTH)
             })
         Spacer(modifier = Modifier.width(10.dp))
         DefaultRadioButton(text = stringResource(R.string.one_year),
-            selected = dateWindow == Constants.TIME_YEAR,
+            selected = pricePeriod == Constants.DAYS_IN_A_YEAR,
             onSelect = {
-                onDateChange(Constants.TIME_YEAR)
+                onDateChange(Constants.DAYS_IN_A_YEAR)
             })
     }
 }

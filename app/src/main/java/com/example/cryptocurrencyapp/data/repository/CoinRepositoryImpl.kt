@@ -18,7 +18,7 @@ class CoinRepositoryImpl @Inject constructor(
         return api.getCoinById(coinId)
     }
 
-    override suspend fun getPriceHistory(coinId: String, start: String): List<CoinPriceDto> {
-        return api.getPriceHistory(coinId, start)
+    override suspend fun getPriceHistory(coinId: String, start: String, limit: Int): List<CoinPriceDto> {
+        return api.getPriceHistory(coinId, start, limit)
     }
 }
