@@ -4,25 +4,27 @@ import com.example.cryptocurrencyapp.common.Resource
 import com.example.cryptocurrencyapp.common.ResourceHandler
 import com.example.cryptocurrencyapp.data.remote.CoinPaprikaApi
 import com.example.cryptocurrencyapp.data.repository.CoinRepositoryImpl
-import com.example.cryptocurrencyapp.domain.model.CoinDetail
+import com.example.cryptocurrencyapp.domain.model.CoinPrice
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 
-class GetCoinTest {
-    private lateinit var getCoin: GetCoin
+class GetPriceHistoryTest {
+    private lateinit var getPriceHistory: GetPriceHistory
     private lateinit var server: ResourceHandler
 
     /// Test Data
-    private var coinFile: String = "json/coin.json"
+    private var coinFile: String = "json/priceHistory.json"
     private var coinId: String = "btc-bitcoin"
+    private var pricePeriod: Long = 7
     private var response404: String = "HTTP 404 Client Error"
 
     @Before
@@ -37,7 +39,7 @@ class GetCoinTest {
             .create(CoinPaprikaApi::class.java)
 
         server = ResourceHandler(webServer)
-        getCoin = GetCoin(CoinRepositoryImpl(api))
+        getPriceHistory = GetPriceHistory(CoinRepositoryImpl(api))
     }
 
     @After
@@ -47,28 +49,28 @@ class GetCoinTest {
     }
 
     @Test
-    fun `Get coin by id omits loading resource first`() = runBlocking {
+    fun `Get coin price history omits loading resource first`() = runBlocking {
         server.uploadRequest(coinFile, HttpURLConnection.HTTP_OK)
-        val coin = getCoin(coinId).first()
+        val priceHistory = getPriceHistory(coinId, pricePeriod).first()
 
-        assert(coin is Resource.Loading<CoinDetail>)
+        assert(priceHistory is Resource.Loading<List<CoinPrice>>)
     }
 
     @Test
-    fun `Get coin by id successful request`() = runBlocking {
+    fun `Get coin price history successful request`() = runBlocking {
         server.uploadRequest(coinFile, HttpURLConnection.HTTP_OK)
-        val coin = getCoin(coinId).last()
+        val coin = getPriceHistory(coinId, pricePeriod).last()
 
-        assert(coin is Resource.Success<CoinDetail>)
-        assert(coin.data!!.coinId == coinId)
+        assert(coin is Resource.Success<List<CoinPrice>>)
+        assert(coin.data!!.size == pricePeriod.toInt())
     }
 
     @Test
-    fun `Get coin by id failed request`() = runBlocking {
+    fun `Get coin price history failed request`() = runBlocking {
         server.uploadRequest(coinFile, HttpURLConnection.HTTP_NOT_FOUND)
-        val coin = getCoin(coinId).last()
+        val coin = getPriceHistory(coinId, pricePeriod).last()
 
-        assert(coin is Resource.Error<CoinDetail>)
+        assert(coin is Resource.Error<List<CoinPrice>>)
         assert(coin.message == response404)
     }
 }

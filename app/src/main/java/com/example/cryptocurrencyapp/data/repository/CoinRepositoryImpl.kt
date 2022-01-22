@@ -3,6 +3,7 @@ package com.example.cryptocurrencyapp.data.repository
 import com.example.cryptocurrencyapp.data.remote.CoinPaprikaApi
 import com.example.cryptocurrencyapp.data.remote.dto.CoinDetailDto
 import com.example.cryptocurrencyapp.data.remote.dto.CoinDto
+import com.example.cryptocurrencyapp.data.remote.dto.CoinPriceDto
 import com.example.cryptocurrencyapp.domain.repository.CoinRepository
 import javax.inject.Inject
 
@@ -15,5 +16,9 @@ class CoinRepositoryImpl @Inject constructor(
 
     override suspend fun getCoinsById(coinId: String): CoinDetailDto {
         return api.getCoinById(coinId)
+    }
+
+    override suspend fun getPriceHistory(coinId: String, start: String, limit: Int): List<CoinPriceDto> {
+        return api.getPriceHistory(coinId, start, limit)
     }
 }

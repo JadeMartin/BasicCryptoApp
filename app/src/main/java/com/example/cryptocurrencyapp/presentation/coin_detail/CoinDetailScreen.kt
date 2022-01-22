@@ -12,21 +12,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptocurrencyapp.R
+import com.example.cryptocurrencyapp.presentation.coin_detail.components.*
 import com.google.accompanist.flowlayout.FlowRow
-import com.example.cryptocurrencyapp.presentation.coin_detail.components.CoinTag
-import com.example.cryptocurrencyapp.presentation.coin_detail.components.TeamListItem
 
 @Composable
 fun CoinDetailScreen(
     viewModel: CoinDetailViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val coinState = viewModel.coinState.value
+    val historyState = viewModel.historyState.value
+
     Box(modifier = Modifier.fillMaxSize()) {
-        state.coin?.let { coin ->
+        coinState.coin?.let { coin ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(20.dp)
@@ -35,15 +38,16 @@ fun CoinDetailScreen(
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
+                    ) {
                         Text(
                             text = "${coin.rank}. ${coin.name} (${coin.symbol})",
                             style = MaterialTheme.typography.h2,
                             modifier = Modifier.weight(8f)
                         )
                         Text(
-                            text = if(coin.isActive) "active" else "inactive",
-                            color = if(coin.isActive) Color.Green else Color.Red,
+                            text = if(coin.isActive) stringResource(R.string.active) else stringResource(
+                                R.string.inactive),
+                            color = if (coin.isActive) Color.Green else Color.Red,
                             fontStyle = FontStyle.Italic,
                             textAlign = TextAlign.End,
                             modifier = Modifier
@@ -58,7 +62,28 @@ fun CoinDetailScreen(
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
-                        text = "Tags",
+                        text = stringResource(R.string.price_history_title),
+                        style = MaterialTheme.typography.h3
+                    )
+                    CoinHistory(
+                        historyState = historyState,
+                        modifier = Modifier
+                            .height(200.dp)
+                            .fillMaxWidth()
+                            .padding(15.dp),
+                    )
+                    PricePeriodSelect(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
+                        pricePeriod = historyState.pricePeriod,
+                        onDateChange = {
+                            viewModel.onEvent(CoinEvent.DateChange(it))
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Text(
+                        text = stringResource(R.string.tags_title),
                         style = MaterialTheme.typography.h3
                     )
                     Spacer(modifier = Modifier.height(15.dp))
@@ -73,7 +98,7 @@ fun CoinDetailScreen(
                     }
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
-                        text = "Team members",
+                        text = stringResource(R.string.team_title),
                         style = MaterialTheme.typography.h3
                     )
                     Spacer(modifier = Modifier.height(15.dp))
@@ -89,9 +114,9 @@ fun CoinDetailScreen(
                 }
             }
         }
-        if(state.error.isNotBlank()) {
+        if (coinState.error.isNotBlank()) {
             Text(
-                text = state.error,
+                text = coinState.error,
                 color = MaterialTheme.colors.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -100,7 +125,7 @@ fun CoinDetailScreen(
                     .align(Alignment.Center)
             )
         }
-        if(state.isLoading) {
+        if (coinState.isLoading || historyState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }

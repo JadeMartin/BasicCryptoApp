@@ -1,5 +1,6 @@
 package com.example.cryptocurrencyapp.domain.use_case
 
+import com.example.cryptocurrencyapp.common.Constants
 import com.example.cryptocurrencyapp.common.Resource
 import com.example.cryptocurrencyapp.data.remote.dto.toCoinDetail
 import com.example.cryptocurrencyapp.domain.model.CoinDetail
@@ -10,7 +11,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetCoinUseCase @Inject constructor(
+class GetCoin @Inject constructor(
     private val repository: CoinRepository
 ) {
     // Operator fun can call the use case like a function
@@ -21,9 +22,9 @@ class GetCoinUseCase @Inject constructor(
              val coin = repository.getCoinsById(coinId).toCoinDetail()
              emit(Resource.Success<CoinDetail>(coin))
          } catch(e: HttpException) {
-             emit(Resource.Error<CoinDetail>(e.localizedMessage ?: "An unexpected error occurred."))
+             emit(Resource.Error<CoinDetail>(e.localizedMessage ?: Constants.DEFAULT_ERROR))
          } catch(e: IOException) {
-             emit(Resource.Error<CoinDetail>("Couldn't reach server. Please check your internet connection"))
+             emit(Resource.Error<CoinDetail>(Constants.DEFAULT_ERROR_INTERNET))
          }
      }
 }
