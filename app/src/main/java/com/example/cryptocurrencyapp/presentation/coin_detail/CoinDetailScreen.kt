@@ -68,8 +68,9 @@ fun CoinDetailScreen(
                     CoinHistory(
                         historyState = historyState,
                         modifier = Modifier
+                            .height(200.dp)
                             .fillMaxWidth()
-                            .padding(10.dp),
+                            .padding(15.dp),
                     )
                     PricePeriodSelect(
                         modifier = Modifier

@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptocurrencyapp.common.Constants
 import com.example.cryptocurrencyapp.common.Resource
-import com.example.cryptocurrencyapp.common.getDate
 import com.example.cryptocurrencyapp.domain.use_case.GetCoin
 import com.example.cryptocurrencyapp.domain.use_case.GetPriceHistory
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -66,7 +65,7 @@ class CoinDetailViewModel @Inject constructor(
                 when(result) {
                     is Resource.Success -> {
                         _historyState.value = PriceHistoryState(
-                            history = result.data ?: emptyList(),
+                            history = result.data,
                             pricePeriod = pricePeriod
                         )
                     }

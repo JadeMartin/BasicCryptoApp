@@ -22,19 +22,19 @@ fun PricePeriodSelect(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        DefaultRadioButton(text = stringResource(R.string.one_week),
+        BasicRadioButton(text = stringResource(R.string.one_week),
             selected = pricePeriod == Constants.DAYS_IN_A_WEEK,
             onSelect = {
                 onDateChange(Constants.DAYS_IN_A_WEEK)
             })
         Spacer(modifier = Modifier.width(10.dp))
-        DefaultRadioButton(text = stringResource(R.string.one_month),
+        BasicRadioButton(text = stringResource(R.string.one_month),
             selected = pricePeriod == Constants.DAYS_IN_A_MONTH,
             onSelect = {
                 onDateChange(Constants.DAYS_IN_A_MONTH)
             })
         Spacer(modifier = Modifier.width(10.dp))
-        DefaultRadioButton(text = stringResource(R.string.one_year),
+        BasicRadioButton(text = stringResource(R.string.one_year),
             selected = pricePeriod == Constants.DAYS_IN_A_YEAR,
             onSelect = {
                 onDateChange(Constants.DAYS_IN_A_YEAR)
