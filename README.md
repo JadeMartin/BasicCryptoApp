@@ -6,3 +6,6 @@ The first commit is the state at when the tutorial left the project at the tutor
 
 ## Additional Features
 Main features added on include coin price history which is displayed in a graph and testing including unit & UI.
+
+## API
+Public api used to create this app is called CoinPaprika can be found [here](https://api.coinpaprika.com/)
